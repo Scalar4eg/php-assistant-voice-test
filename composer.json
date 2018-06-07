@@ -1,0 +1,5 @@
+{
+    "require": {
+        "duncan3dc/speaker": "^1.1"
+    }
+}

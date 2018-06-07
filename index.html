@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный помошник</title>
+    <script type="application/javascript" src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<script>
+    $(function () {
+        function addMessage(message) {
+            $("<div>").text(message).appendTo($("#dialog"));
+        }
+
+        const audio = $("audio")[0];
+        $("#send").click(function () {
+            const message = $("#input").val();
+            addMessage(">> " + message);
+            $.post("api.php", {text: message}, function (data) {
+                addMessage("<< " + data);
+            });
+            audio.src = "api.php?get_audio=1&text=" + message;
+            audio.play();
+            $("#input").val("");
+        });
+    });
+</script>
+
+<body>
+    <audio></audio>
+    <div id="dialog">
+    </div>
+    <input type="text" id="input" style="width:300px;" placeholder="задавайте вопрос"/>
+    <button id="send">Отправить</button>
+</body>
+</html>
